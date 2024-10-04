@@ -1,5 +1,5 @@
 const resize = (bucket, hashKey) => {
-  let newBuckets = new Array(bucket.length * 2);
+  const newBuckets = new Array(bucket.length * 2);
 
   for (let i = 0; i < bucket.length; i++) {
     if (bucket) {
@@ -9,6 +9,7 @@ const resize = (bucket, hashKey) => {
       });
     }
   }
+  bucket = newBuckets;
 };
 
 class HashMap {
