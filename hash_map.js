@@ -29,8 +29,6 @@ class HashMap {
           this.buckets[index][0][1] = value
          }
       }
-
-      // this.buckets[index].push([key, value]);
     } else {
       this.buckets[index] = [[key, value]];
     }
