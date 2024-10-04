@@ -1,8 +1,22 @@
+const resize = (bucket, hashKey) => {
+let newBuckets = new Array(bucket.length * 2);
+
+for(let i = 0; i < bucket.length; i++) {
+  if(bucket){
+    bucket.forEach(([key, value]) => {
+      const index = hashKey;
+    })
+  }
+}
+
+}
+
+
 class HashMap {
   constructor() {
     this.buckets = new Array(16);
-    this.numberOfItems = 0;
-    this.loadFactor = 0.75;
+    this.numberOfEntries = 0;
+    this.loadFactor = this.numberOfEntries / this.buckets.length
   }
 
   hash(key) {
@@ -16,7 +30,10 @@ class HashMap {
     return hashCode;
   }
 
+
+
   set = (key, value) => {
+    this.numberOfEntries++;
     const index = this.hash(key);
 
     if (index < 0 || index >= this.buckets.length)
@@ -32,7 +49,7 @@ class HashMap {
       this.buckets[index] = [[key, value]];
     }
 
-    
+
     // if (this.size / this.buckets.length >= this.loadFactor) {
     //   const initialBuckets = this.buckets();
     //   this.buckets = new Array(this.buckets.length * 3);
@@ -53,7 +70,8 @@ class HashMap {
 
     const keyValues = this.buckets[index].filter((x) => x[0] === key);
 
-    return this.buckets[index]
+    // return this.buckets[index]
+    return resize(this.buckets[index], index)
   };
 }
 
