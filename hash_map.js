@@ -1,7 +1,7 @@
 class HashMap {
   constructor() {
     this.buckets = new Array(16);
-    this.size = 0;
+    this.numberOfItems = 0;
     this.loadFactor = 0.75;
   }
 
@@ -23,7 +23,6 @@ class HashMap {
       throw new Error("The index is out of bound");
 
     if (this.buckets[index]) {
-
       for(let i = 0; i < this.buckets[index].length; i++) {
          if(this.buckets[index][0][0] === key){
           this.buckets[index][0][1] = value
@@ -33,16 +32,7 @@ class HashMap {
       this.buckets[index] = [[key, value]];
     }
 
-    // for (let i = 0; i < bucket.length; i++) {
-    //   if (bucket[i][0] == key) {
-    //     bucket[i][1] == value;
-    //     return;
-    //   }
-    // }
-
-    // bucket.push([key, value]);
-    // this.size++;
-
+    
     // if (this.size / this.buckets.length >= this.loadFactor) {
     //   const initialBuckets = this.buckets();
     //   this.buckets = new Array(this.buckets.length * 3);
