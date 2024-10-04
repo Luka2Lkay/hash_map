@@ -1,5 +1,5 @@
 const resize = (bucket, hashKey) => {
-  let newBuckets = new Array(bucket.length * 27);
+  let newBuckets = new Array(bucket.length * 2);
 
   for (let i = 0; i < bucket.length; i++) {
     if (bucket) {
@@ -34,11 +34,12 @@ class HashMap {
     const loadFactor = this.numberOfEntries / this.buckets.length;
     console.log(loadFactor);
 
-    // if(this.loadFactor > 0.75) {
-    //   resize(this.buckets, index);
-    // }
+    if(loadFactor > 0.75) {
+      resize(this.buckets, index);
+    }
 
-    console.log(this.numberOfEntries / this.buckets.length);
+    console.log(loadFactor);
+
     if (index < 0 || index >= this.buckets.length)
       throw new Error("The index is out of bound");
 
@@ -76,6 +77,8 @@ newHash.set("ice cream", "white");
 newHash.set("jacket", "blue");
 newHash.set("kite", "pink");
 newHash.set("lion", "golden");
+newHash.set('moon', 'silver')
+
 
 console.log(newHash.get("apple"));
 console.log(newHash.get("banana"));
@@ -89,3 +92,5 @@ console.log(newHash.get("ice cream"));
 console.log(newHash.get("jacket"));
 console.log(newHash.get("kite"));
 console.log(newHash.get("lion"));
+console.log(newHash.get("moon"));
+
