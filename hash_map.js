@@ -3,7 +3,7 @@ const resize = (bucket, hashKey) => {
 
   for (let i = 0; i < bucket.length; i++) {
     if (bucket) {
-      bucket.forEach(([key,value]) => {
+      bucket.forEach(([key, value]) => {
         const index = hashKey;
         newBuckets[index] = value;
       });
@@ -52,10 +52,7 @@ class HashMap {
 
     if (!this.buckets[index]) return null;
 
-    const keyValues = this.buckets[index].filter((x) => x[0] === key);
-
-    return this.buckets[index]
-    // return resize(this.buckets[index], index);
+    return this.buckets[index][0][1];
   };
 }
 
@@ -67,6 +64,6 @@ newHash.set("carrot", "orange");
 newHash.set("dog", "brown");
 console.log(newHash.get("apple"));
 console.log(newHash.get("banana"));
-console.log(newHash.get("carrot"))
-console.log(newHash.get("dog"))
+console.log(newHash.get("carrot"));
+console.log(newHash.get("dog"));
 console.log(newHash.hash("apple"));
