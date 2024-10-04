@@ -1,22 +1,21 @@
 const resize = (bucket, hashKey) => {
-let newBuckets = new Array(bucket.length * 2);
+  let newBuckets = new Array(bucket.length * 2);
 
-for(let i = 0; i < bucket.length; i++) {
-  if(bucket){
-    bucket.forEach(([key, value]) => {
-      const index = hashKey;
-    })
+  for (let i = 0; i < bucket.length; i++) {
+    if (bucket) {
+      bucket.forEach(([key,value]) => {
+        const index = hashKey;
+        newBuckets[index] = value;
+      });
+    }
   }
-}
-
-}
-
+};
 
 class HashMap {
   constructor() {
     this.buckets = new Array(16);
     this.numberOfEntries = 0;
-    this.loadFactor = this.numberOfEntries / this.buckets.length
+    this.loadFactor = this.numberOfEntries / this.buckets.length;
   }
 
   hash(key) {
@@ -30,8 +29,6 @@ class HashMap {
     return hashCode;
   }
 
-
-
   set = (key, value) => {
     this.numberOfEntries++;
     const index = this.hash(key);
@@ -40,27 +37,14 @@ class HashMap {
       throw new Error("The index is out of bound");
 
     if (this.buckets[index]) {
-      for(let i = 0; i < this.buckets[index].length; i++) {
-         if(this.buckets[index][0][0] === key){
-          this.buckets[index][0][1] = value
-         }
+      for (let i = 0; i < this.buckets[index].length; i++) {
+        if (this.buckets[index][0][0] === key) {
+          this.buckets[index][0][1] = value;
+        }
       }
     } else {
       this.buckets[index] = [[key, value]];
     }
-
-
-    // if (this.size / this.buckets.length >= this.loadFactor) {
-    //   const initialBuckets = this.buckets();
-    //   this.buckets = new Array(this.buckets.length * 3);
-
-    //   for (let i = 0; i < initialBuckets.length; i++) {
-    //     for (let j = 0; j < initialBuckets[i]; i++) {
-    //       const [key, value] = initialBuckets[i][j];
-    //       this.set(key, value);
-    //     }
-    //   }
-    // }
   };
 
   get = (key) => {
@@ -70,8 +54,8 @@ class HashMap {
 
     const keyValues = this.buckets[index].filter((x) => x[0] === key);
 
-    // return this.buckets[index]
-    return resize(this.buckets[index], index)
+    return this.buckets[index]
+    // return resize(this.buckets[index], index);
   };
 }
 
@@ -83,4 +67,6 @@ newHash.set("carrot", "orange");
 newHash.set("dog", "brown");
 console.log(newHash.get("apple"));
 console.log(newHash.get("banana"));
+console.log(newHash.get("carrot"))
+console.log(newHash.get("dog"))
 console.log(newHash.hash("apple"));
