@@ -61,8 +61,7 @@ class HashMap {
   const keyValues = this.buckets[index].filter(x => x[0] === key);
 
   return keyValues[keyValues.length-1];
-  // return this.buckets[index].
-
+  
   }
 }
 
