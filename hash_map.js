@@ -1,9 +1,16 @@
-
+const defaultConfig = {
+  hashMapSize: 16,
+  loadFactor: 0.75,
+};
 class HashMap {
-  constructor() {
-    this.bucketsSize = 16;
-    this.buckets = new Array(this.bucketsSize);
-    for (let i = 0; i < this.bucketsSize; i++) this.buckets[i] = {};
+  #_buckets;
+  constructor(config) {
+    Object.entries({ ...defaultConfig, ...config }).forEach(([key, value]) => {
+      this[key] = value;
+    });
+
+    // this.bucketsSize = 16;
+    this.#_buckets = new Array(this.hashMapSize);
     this.numberOfEntries = 0;
   }
 
@@ -13,9 +20,63 @@ class HashMap {
 
     for (let i = 0; i < key.length; i++) {
       hashCode =
-        (primeNumber * key.charCodeAt(i) + hashCode) % this.bucketsSize;
+        (primeNumber * key.charCodeAt(i) + hashCode) % this.hashMapSize;
     }
     return hashCode;
+  }
+  #findAvailableCodeForKey(key) {
+    let hashCode = this.hash(key);
+    if (
+      this.#_buckets[hashCode] === undefined ||
+      this.#_buckets[hashCode].key === key
+    ) {
+      return hashCode;
+    } else {
+      // Fixed collision
+      let jumpStep = 1;
+      while (jumpStep <= this.#_buckets.length) {
+        const newHashCode = (hashCode + jumpStep) % this.#_buckets.length;
+        if (
+          this.#_buckets[newHashCode] === undefined ||
+          this.#_buckets[newHashCode].key === key
+        ) {
+          return newHashCode;
+        }
+        jumpStep++;
+      }
+      return -1;
+    }
+  }
+
+  currentCapacity() {
+    return (
+      this.#_buckets.filter((obj) => obj !== undefined).length /
+      this.#_buckets.length
+    );
+  }
+
+  #expandBuckets() {
+    const oldArr = this.#_buckets.slice();
+    const newSize = oldArr.length * 2;
+    const newArr = new Array(newSize);
+    this.#_buckets = newArr;
+    oldArr.forEach((item) => {
+      if (item !== undefined) {
+        const hashCode = this.#findAvailableCodeForKey(item.key);
+        this.#_buckets[hashCode] = { key: item.key, value: item.value };
+      }
+    });
+  }
+
+  set(key, value) {
+    const hashCode = this.#findAvailableCodeForKey(key);
+    this.#_buckets[hashCode] = { key, value };
+    this.numberOfEntries++;
+    console.log(this.currentCapacity());
+    if (this.currentCapacity() > this.loadFactor) {
+      this.#expandBuckets();
+    }
+    console.log(this.currentCapacity())
   }
 
   // set = (key, value) => {
@@ -55,23 +116,22 @@ class HashMap {
 
 
 
+  get(key) {
+    const hashCode = this.#findAvailableCodeForKey(key);
+    if (hashCode === -1 || this.#_buckets[hashCode] === undefined) {
+      return null;
+    }
+    return this.#_buckets[hashCode];
+  }
 
+  // get = (key) => {
+  //   const index = this.hash(key);
 
+  //   if (!this.#_buckets[index]) return null;
 
-
-
-
-
-
-
-  get = (key) => {
-    const index = this.hash(key);
-
-    if (!this.buckets[index]) return null;
-
-    // return this.buckets[index].find((x) => x[0] === key)[1];
-    return this.buckets[index];
-  };
+  //   // return this.buckets[index].find((x) => x[0] === key)[1];
+  //   return this.#_buckets[index];
+  // };
 }
 
 
@@ -88,7 +148,9 @@ class HashMap {
 
 
 
-const newHash = new HashMap();
+const newHash = new HashMap(defaultConfig);
+
+console.log(newHash)
 newHash.set("apple", "red");
 newHash.set("banana", "yellow");
 newHash.set("carrot", "orange");
