@@ -33,16 +33,16 @@ class HashMap {
     ) {
       return hashCode;
     } else {
-      let jumpStep = 1;
-      while (jumpStep <= this.#buckets.length) {
-        const newHashCode = (hashCode + jumpStep) % this.#buckets.length;
+      let skipStep = 1;
+      while (skipStep <= this.#buckets.length) {
+        const newHashCode = (hashCode + skipStep) % this.#buckets.length;
         if (
-          this.#buckets[newHashCode] === undefined ||
+          !this.#buckets[newHashCode] ||
           this.#buckets[newHashCode].key === key
         ) {
           return newHashCode;
         }
-        jumpStep++;
+        skipStep++;
       }
       return -1;
     }
@@ -55,7 +55,7 @@ class HashMap {
     );
   }
 
-  #expandBuckets() {
+  #resize() {
     const oldArr = this.#buckets.slice();
     const newSize = oldArr.length * 2;
     const newArr = new Array(newSize);
@@ -74,7 +74,7 @@ class HashMap {
     this.#numberOfEntries++;
     console.log(this.currentCapacity());
     if (this.currentCapacity() > this.loadFactor) {
-      this.#expandBuckets();
+      this.#resize();
     }
     console.log(this.currentCapacity());
   }
