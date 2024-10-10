@@ -37,13 +37,13 @@ class HashMap {
 
   #currentCapacity() {
     const occupiedBuckets = this.buckets.filter((obj) => obj !== undefined);
-
+    
     return occupiedBuckets.length / this.buckets.length;
   }
 
   #resize() {
-    const oldArr = this.buckets.slice();
-    const newSize = oldArr.length * 2;
+    const oldArr = this.buckets;
+    const newSize = this.hashMapSize * 2;
     const newArr = new Array(newSize);
     this.buckets = newArr;
     oldArr.forEach((item) => {
@@ -57,7 +57,7 @@ class HashMap {
   set(key, value) {
     const index = this.#findAvailableIndex(key);
     this.buckets[index] = { key, value };
-    this.numberOfEntries++;
+    // this.numberOfEntries++;
     console.log(this.#currentCapacity());
     if (this.#currentCapacity() > this.loadFactor) {
       this.#resize();
