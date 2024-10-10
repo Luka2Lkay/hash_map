@@ -57,12 +57,10 @@ class HashMap {
   set(key, value) {
     const index = this.#findAvailableIndex(key);
     this.buckets[index] = { key, value };
-    // this.numberOfEntries++;
-    console.log(this.#currentCapacity());
+  
     if (this.#currentCapacity() > this.loadFactor) {
       this.#resize();
     }
-    console.log(this.#currentCapacity());
   }
 
   get(key) {
@@ -70,7 +68,7 @@ class HashMap {
     if (hashCode === -1 || this.buckets[hashCode] === undefined) {
       return null;
     }
-    return this.buckets[hashCode];
+    return this.buckets[hashCode].value;
   }
 }
 
