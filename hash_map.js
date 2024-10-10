@@ -1,7 +1,7 @@
 class HashMap {
   constructor() {
     this.hashMapSize = 16;
-    this.loadFactor = 0.75
+    this.loadFactor = 0.75;
     this.buckets = new Array(this.hashMapSize);
     this.numberOfEntries = 0;
   }
@@ -19,23 +19,15 @@ class HashMap {
 
   #findAvailableIndex(key) {
     let index = this.hash(key);
-    
-    if (
-      !this.buckets[index] ||
-      this.buckets[index].key === key
-    ) {
+
+    if (!this.buckets[index] || this.buckets[index].key === key) {
       return index;
     } else {
       let skipStep = 1;
       while (skipStep <= this.buckets.length) {
         const newIndex = (index + skipStep) % this.buckets.length;
-        if (
-          !this.buckets[newIndex] ||
-          this.buckets[newIndex].key === key
-        ) {
-       
-          return newIndex
-         
+        if (!this.buckets[newIndex] || this.buckets[newIndex].key === key) {
+          return newIndex;
         }
         skipStep++;
       }
@@ -44,10 +36,9 @@ class HashMap {
   }
 
   #currentCapacity() {
-    return (
-      this.buckets.filter((obj) => obj !== undefined).length /
-      this.buckets.length
-    );
+    const occupiedBuckets = this.buckets.filter((obj) => obj !== undefined);
+
+    return occupiedBuckets.length / this.buckets.length;
   }
 
   #resize() {
