@@ -19,7 +19,7 @@ class HashMap {
 
   #findAvailableIndex(key) {
     let index = this.hash(key);
-   
+    
     if (
       !this.buckets[index] ||
       this.buckets[index].key === key
@@ -33,7 +33,9 @@ class HashMap {
           !this.buckets[newIndex] ||
           this.buckets[newIndex].key === key
         ) {
-          return newIndex;
+       
+          return newIndex
+         
         }
         skipStep++;
       }
@@ -41,7 +43,7 @@ class HashMap {
     }
   }
 
-  currentCapacity() {
+  #currentCapacity() {
     return (
       this.buckets.filter((obj) => obj !== undefined).length /
       this.buckets.length
@@ -65,11 +67,11 @@ class HashMap {
     const index = this.#findAvailableIndex(key);
     this.buckets[index] = { key, value };
     this.numberOfEntries++;
-    console.log(this.currentCapacity());
-    if (this.currentCapacity() > this.loadFactor) {
+    console.log(this.#currentCapacity());
+    if (this.#currentCapacity() > this.loadFactor) {
       this.#resize();
     }
-    console.log(this.currentCapacity());
+    console.log(this.#currentCapacity());
   }
 
   get(key) {
