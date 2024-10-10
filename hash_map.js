@@ -1,8 +1,4 @@
 class HashMap {
-  #buckets;
-  // #hashMapSize;
-  #numberOfEntries;
-
   constructor() {
     Object.entries({ ...{ hashMapSize: 16, loadFactor: 0.75 } }).forEach(
       ([key, value]) => {
@@ -10,8 +6,8 @@ class HashMap {
       }
     );
 
-    this.#buckets = new Array(this.hashMapSize);
-    this.#numberOfEntries = 0;
+    this.buckets = new Array(this.hashMapSize);
+    this.numberOfEntries = 0;
   }
 
   hash(key) {
@@ -28,17 +24,17 @@ class HashMap {
   #findUnusedCodeForKey(key) {
     let hashCode = this.hash(key);
     if (
-      !this.#buckets[hashCode] ||
-      this.#buckets[hashCode].key === key
+      !this.buckets[hashCode] ||
+      this.buckets[hashCode].key === key
     ) {
       return hashCode;
     } else {
       let skipStep = 1;
-      while (skipStep <= this.#buckets.length) {
-        const newHashCode = (hashCode + skipStep) % this.#buckets.length;
+      while (skipStep <= this.buckets.length) {
+        const newHashCode = (hashCode + skipStep) % this.buckets.length;
         if (
-          !this.#buckets[newHashCode] ||
-          this.#buckets[newHashCode].key === key
+          !this.buckets[newHashCode] ||
+          this.buckets[newHashCode].key === key
         ) {
           return newHashCode;
         }
@@ -50,28 +46,28 @@ class HashMap {
 
   currentCapacity() {
     return (
-      this.#buckets.filter((obj) => obj !== undefined).length /
-      this.#buckets.length
+      this.buckets.filter((obj) => obj !== undefined).length /
+      this.buckets.length
     );
   }
 
   #resize() {
-    const oldArr = this.#buckets.slice();
+    const oldArr = this.buckets.slice();
     const newSize = oldArr.length * 2;
     const newArr = new Array(newSize);
-    this.#buckets = newArr;
+    this.buckets = newArr;
     oldArr.forEach((item) => {
       if (item !== undefined) {
         const hashCode = this.#findUnusedCodeForKey(item.key);
-        this.#buckets[hashCode] = { key: item.key, value: item.value };
+        this.buckets[hashCode] = { key: item.key, value: item.value };
       }
     });
   }
 
   set(key, value) {
     const hashCode = this.#findUnusedCodeForKey(key);
-    this.#buckets[hashCode] = { key, value };
-    this.#numberOfEntries++;
+    this.buckets[hashCode] = { key, value };
+    this.numberOfEntries++;
     console.log(this.currentCapacity());
     if (this.currentCapacity() > this.loadFactor) {
       this.#resize();
@@ -79,13 +75,12 @@ class HashMap {
     console.log(this.currentCapacity());
   }
 
-
   get(key) {
     const hashCode = this.#findUnusedCodeForKey(key);
-    if (hashCode === -1 || this.#buckets[hashCode] === undefined) {
+    if (hashCode === -1 || this.buckets[hashCode] === undefined) {
       return null;
     }
-    return this.#buckets[hashCode];
+    return this.buckets[hashCode];
   }
 }
 
