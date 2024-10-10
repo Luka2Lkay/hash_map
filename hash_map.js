@@ -42,11 +42,11 @@ class HashMap {
   }
 
   #resize() {
-    const oldArr = this.buckets;
-    const newSize = this.hashMapSize * 2;
-    const newArr = new Array(newSize);
-    this.buckets = newArr;
-    oldArr.forEach((item) => {
+    const initialBuckets = this.buckets;
+    const newHashMapSize = this.hashMapSize * 2;
+    const newBuckets = new Array(newHashMapSize);
+    this.buckets = newBuckets;
+    initialBuckets.forEach((item) => {
       if (item !== undefined) {
         const index = this.#findAvailableIndex(item.key);
         this.buckets[index] = { key: item.key, value: item.value };
