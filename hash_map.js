@@ -17,22 +17,23 @@ class HashMap {
     return hashCode;
   }
 
-  #findUnusedCodeForKey(key) {
-    let hashCode = this.hash(key);
+  #findAvailableIndex(key) {
+    let index = this.hash(key);
+   
     if (
-      !this.buckets[hashCode] ||
-      this.buckets[hashCode].key === key
+      !this.buckets[index] ||
+      this.buckets[index].key === key
     ) {
-      return hashCode;
+      return index;
     } else {
       let skipStep = 1;
       while (skipStep <= this.buckets.length) {
-        const newHashCode = (hashCode + skipStep) % this.buckets.length;
+        const newIndex = (index + skipStep) % this.buckets.length;
         if (
-          !this.buckets[newHashCode] ||
-          this.buckets[newHashCode].key === key
+          !this.buckets[newIndex] ||
+          this.buckets[newIndex].key === key
         ) {
-          return newHashCode;
+          return newIndex;
         }
         skipStep++;
       }
@@ -54,15 +55,15 @@ class HashMap {
     this.buckets = newArr;
     oldArr.forEach((item) => {
       if (item !== undefined) {
-        const hashCode = this.#findUnusedCodeForKey(item.key);
-        this.buckets[hashCode] = { key: item.key, value: item.value };
+        const index = this.#findAvailableIndex(item.key);
+        this.buckets[index] = { key: item.key, value: item.value };
       }
     });
   }
 
   set(key, value) {
-    const hashCode = this.#findUnusedCodeForKey(key);
-    this.buckets[hashCode] = { key, value };
+    const index = this.#findAvailableIndex(key);
+    this.buckets[index] = { key, value };
     this.numberOfEntries++;
     console.log(this.currentCapacity());
     if (this.currentCapacity() > this.loadFactor) {
@@ -72,7 +73,7 @@ class HashMap {
   }
 
   get(key) {
-    const hashCode = this.#findUnusedCodeForKey(key);
+    const hashCode = this.#findAvailableIndex(key);
     if (hashCode === -1 || this.buckets[hashCode] === undefined) {
       return null;
     }
