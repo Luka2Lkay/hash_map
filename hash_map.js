@@ -1,11 +1,7 @@
 class HashMap {
   constructor() {
-    Object.entries({ ...{ hashMapSize: 16, loadFactor: 0.75 } }).forEach(
-      ([key, value]) => {
-        this[key] = value;
-      }
-    );
-
+    this.hashMapSize = 16;
+    this.loadFactor = 0.75
     this.buckets = new Array(this.hashMapSize);
     this.numberOfEntries = 0;
   }
