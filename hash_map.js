@@ -1,3 +1,15 @@
+const people = [
+  { name: "Luka", age: 18 },
+  { name: "Sikhu", age: 10 },
+  { name: "John", age: 5 },
+];
+
+const result = people.findIndex((person) => person.name === "Sikhu");
+
+const test = people.splice(0, 1);
+console.log(test);
+console.log(people);
+console.log(result);
 class HashMap {
   constructor() {
     this.hashMapSize = 16;
@@ -80,6 +92,28 @@ class HashMap {
 
     return this.buckets[index].key === key;
   }
+
+  remove(key) {
+    const index = this.#findAvailableIndex(key);
+
+    const position = this.buckets.findIndex((item) => {
+      if (item) {
+        if(item.key === key){
+          return item.key === key
+        }
+      }
+
+    });
+
+    if (index === position){
+      return this.buckets.splice(position,1)
+    }
+
+
+    
+
+
+  }
 }
 
 const newHash = new HashMap();
@@ -97,6 +131,10 @@ newHash.set("jacket", "blue");
 newHash.set("kite", "pink");
 newHash.set("lion", "golden");
 newHash.set("moon", "silver");
+
+console.log(newHash.remove("apple"));
+console.log(newHash.remove("banana"));
+console.log(newHash.remove("carrot"));
 
 console.log(newHash.has("apple"));
 console.log(newHash.has("banana"));
