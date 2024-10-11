@@ -74,12 +74,9 @@ class HashMap {
   has(key) {
     const index = this.#findAvailableIndex(key);
 
-    // console.log(!this.buckets[index])
-
-    if(!this.buckets[index]) {
-      return null;
+    if (index === -1 || !this.buckets[index]) {
+      return false;
     }
-
 
     return this.buckets[index].key === key;
   }
@@ -103,7 +100,7 @@ newHash.set("moon", "silver");
 
 console.log(newHash.has("apple"));
 console.log(newHash.has("banana"));
-// console.log(newHash.has("carrot"));
+console.log(newHash.has("carrot"));
 console.log(newHash.has("car"));
 
 console.log(newHash.get("apple"));
