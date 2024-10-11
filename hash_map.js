@@ -37,7 +37,7 @@ class HashMap {
 
   #currentCapacity() {
     const occupiedBuckets = this.buckets.filter((obj) => obj !== undefined);
-    
+
     return occupiedBuckets.length / this.buckets.length;
   }
 
@@ -57,18 +57,31 @@ class HashMap {
   set(key, value) {
     const index = this.#findAvailableIndex(key);
     this.buckets[index] = { key, value };
-  
+
     if (this.#currentCapacity() > this.loadFactor) {
       this.#resize();
     }
   }
 
   get(key) {
-    const hashCode = this.#findAvailableIndex(key);
-    if (hashCode === -1 || this.buckets[hashCode] === undefined) {
+    const index = this.#findAvailableIndex(key);
+    if (index === -1 || !this.buckets[index]) {
       return null;
     }
-    return this.buckets[hashCode].value;
+    return this.buckets[index].value;
+  }
+
+  has(key) {
+    const index = this.#findAvailableIndex(key);
+
+    // console.log(!this.buckets[index])
+
+    if(!this.buckets[index]) {
+      return null;
+    }
+
+
+    return this.buckets[index].key === key;
   }
 }
 
@@ -87,6 +100,11 @@ newHash.set("jacket", "blue");
 newHash.set("kite", "pink");
 newHash.set("lion", "golden");
 newHash.set("moon", "silver");
+
+console.log(newHash.has("apple"));
+console.log(newHash.has("banana"));
+// console.log(newHash.has("carrot"));
+console.log(newHash.has("car"));
 
 console.log(newHash.get("apple"));
 console.log(newHash.get("banana"));
