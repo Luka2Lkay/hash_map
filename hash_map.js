@@ -87,8 +87,12 @@ class HashMap {
     }
 
     this.buckets[index] = undefined;
-
+    this.numberOfEntries--;
     return true;
+  }
+
+  length() {
+    return this.numberOfEntries;
   }
 }
 
@@ -116,6 +120,8 @@ console.log(newHash.has("apple"));
 console.log(newHash.has("banana"));
 console.log(newHash.has("carrot"));
 console.log(newHash.has("car"));
+
+console.log(newHash.length());
 
 console.log(newHash.get("apple"));
 console.log(newHash.get("banana"));
