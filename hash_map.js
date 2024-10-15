@@ -88,7 +88,6 @@ class HashMap {
 
     this.buckets[index] = undefined;
 
-    this.numberOfEntries--;
     return true;
   }
 }
@@ -109,9 +108,9 @@ newHash.set("kite", "pink");
 newHash.set("lion", "golden");
 newHash.set("moon", "silver");
 
-console.log(newHash.remove("apple"));
 console.log(newHash.remove("banana"));
 console.log(newHash.remove("carrot"));
+console.log(newHash.remove("apple"));
 
 console.log(newHash.has("apple"));
 console.log(newHash.has("banana"));
