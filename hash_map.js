@@ -95,16 +95,34 @@ class HashMap {
 
   remove(key) {
 
-
-    if(!this.has(key)) {
-      return false;
+    if(this.has(key)) {
+      return false
     }
 
     const index = this.#findAvailableIndex(key);
 
 
+      // if (!this.has(key)) {
+      //   return false;
+      // }
+      // const hashCode = this.#findAvailableCodeForKey(key);
+      // this.#_buckets[hashCode] = undefined;
+      // this.#_length--;
+      // return true;
+  
 
+    // const position = this.buckets.findIndex((item) => {
+    //   if (item) {
+    //     if(item.key === key){
+    //       return item.key === key
+    //     }
+    //   }
 
+    // });
+
+    // if (index === position){
+    //   return this.buckets.splice(position,1)
+    // }
   }
 }
 
