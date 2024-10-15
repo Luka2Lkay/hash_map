@@ -94,23 +94,15 @@ class HashMap {
   }
 
   remove(key) {
-    const index = this.#findAvailableIndex(key);
 
-    const position = this.buckets.findIndex((item) => {
-      if (item) {
-        if(item.key === key){
-          return item.key === key
-        }
-      }
 
-    });
-
-    if (index === position){
-      return this.buckets.splice(position,1)
+    if(!this.has(key)) {
+      return false;
     }
 
+    const index = this.#findAvailableIndex(key);
 
-    
+
 
 
   }
