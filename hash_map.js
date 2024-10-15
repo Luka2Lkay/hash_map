@@ -1,15 +1,3 @@
-const people = [
-  { name: "Luka", age: 18 },
-  { name: "Sikhu", age: 10 },
-  { name: "John", age: 5 },
-];
-
-const result = people.findIndex((person) => person.name === "Sikhu");
-
-const test = people.splice(0, 1);
-console.log(test);
-console.log(people);
-console.log(result);
 class HashMap {
   constructor() {
     this.hashMapSize = 16;
@@ -49,7 +37,6 @@ class HashMap {
 
   #currentCapacity() {
     const occupiedBuckets = this.buckets.filter((obj) => obj !== undefined);
-
     return occupiedBuckets.length / this.buckets.length;
   }
 
@@ -69,7 +56,7 @@ class HashMap {
   set(key, value) {
     const index = this.#findAvailableIndex(key);
     this.buckets[index] = { key, value };
-
+    this.numberOfEntries++;
     if (this.#currentCapacity() > this.loadFactor) {
       this.#resize();
     }
@@ -89,40 +76,20 @@ class HashMap {
     if (index === -1 || !this.buckets[index]) {
       return false;
     }
-
     return this.buckets[index].key === key;
   }
 
   remove(key) {
-
-    if(this.has(key)) {
-      return false
-    }
-
     const index = this.#findAvailableIndex(key);
 
+    if (!this.has(key)) {
+      return false;
+    }
 
-      // if (!this.has(key)) {
-      //   return false;
-      // }
-      // const hashCode = this.#findAvailableCodeForKey(key);
-      // this.#_buckets[hashCode] = undefined;
-      // this.#_length--;
-      // return true;
-  
+    this.buckets[index] = undefined;
 
-    // const position = this.buckets.findIndex((item) => {
-    //   if (item) {
-    //     if(item.key === key){
-    //       return item.key === key
-    //     }
-    //   }
-
-    // });
-
-    // if (index === position){
-    //   return this.buckets.splice(position,1)
-    // }
+    this.numberOfEntries--;
+    return true;
   }
 }
 
