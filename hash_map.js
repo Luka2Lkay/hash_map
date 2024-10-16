@@ -68,7 +68,6 @@ class HashMap {
     if (index === -1 || !this.buckets[index]) {
       return null;
     }
-    
 
     return this.buckets[index].value;
   }
@@ -98,9 +97,19 @@ class HashMap {
     return this.numberOfEntries;
   }
 
-  clear(){
+  clear() {
     this.numberOfEntries = 0;
-    return this.buckets = new Array(this.hashMapSize);
+    return (this.buckets = new Array(this.hashMapSize));
+  }
+
+  keys() {
+    const filterdBuckets = this.buckets.filter((item) => {
+      return item !== undefined;
+    });
+
+    return filterdBuckets.map((bucket) => {
+      return bucket.key;
+    });
   }
 }
 
@@ -130,9 +139,9 @@ console.log(newHash.has("carrot"));
 console.log(newHash.has("car"));
 
 console.log(newHash.length());
-
-newHash.clear();
-console.log(newHash.length())
+console.log(newHash.keys());
+// newHash.clear();
+// console.log(newHash.length())
 
 console.log(newHash.get("apple"));
 console.log(newHash.get("banana"));
