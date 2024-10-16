@@ -111,6 +111,16 @@ class HashMap {
       return bucket.key;
     });
   }
+
+  values(){
+    const filterdBuckets = this.buckets.filter((item) => {
+      return item !== undefined;
+    });
+
+    return filterdBuckets.map((bucket) => {
+      return bucket.value;
+    });
+  }
 }
 
 const newHash = new HashMap();
@@ -139,7 +149,7 @@ console.log(newHash.has("carrot"));
 console.log(newHash.has("car"));
 
 console.log(newHash.length());
-console.log(newHash.keys());
+console.log(newHash.values());
 // newHash.clear();
 // console.log(newHash.length())
 
