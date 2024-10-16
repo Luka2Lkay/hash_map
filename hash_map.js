@@ -64,9 +64,12 @@ class HashMap {
 
   get(key) {
     const index = this.#findAvailableIndex(key);
+
     if (index === -1 || !this.buckets[index]) {
       return null;
     }
+    
+
     return this.buckets[index].value;
   }
 
@@ -93,6 +96,11 @@ class HashMap {
 
   length() {
     return this.numberOfEntries;
+  }
+
+  clear(){
+    this.numberOfEntries = 0;
+    return this.buckets = new Array(this.hashMapSize);
   }
 }
 
@@ -122,6 +130,9 @@ console.log(newHash.has("carrot"));
 console.log(newHash.has("car"));
 
 console.log(newHash.length());
+
+newHash.clear();
+console.log(newHash.length())
 
 console.log(newHash.get("apple"));
 console.log(newHash.get("banana"));
