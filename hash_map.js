@@ -112,13 +112,23 @@ class HashMap {
     });
   }
 
-  values(){
+  values() {
     const filterdBuckets = this.buckets.filter((item) => {
       return item !== undefined;
     });
 
     return filterdBuckets.map((bucket) => {
       return bucket.value;
+    });
+  }
+
+  entries() {
+    const filterdBuckets = this.buckets.filter((item) => {
+      return item !== undefined;
+    });
+
+    return filterdBuckets.map((bucket) => {
+      return [bucket.key, bucket.value];
     });
   }
 }
@@ -149,7 +159,7 @@ console.log(newHash.has("carrot"));
 console.log(newHash.has("car"));
 
 console.log(newHash.length());
-console.log(newHash.values());
+console.log(newHash.entries());
 // newHash.clear();
 // console.log(newHash.length())
 
